@@ -19,3 +19,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('register', 'UserController@registerUser');
 Route::post('login', 'UserController@userLogin');
+// Route::get('bunga', 'BungaController@index');
+
+Route::resource('bunga', 'BungaController', [
+        'names' => [
+            'index' => 'indexbunga',
+        ]
+    ]);
