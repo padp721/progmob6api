@@ -19,7 +19,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('register', 'UserController@registerUser');
 Route::post('login', 'UserController@userLogin');
+Route::post('edit/{id}', 'UserController@userEdit');
 // Route::get('bunga', 'BungaController@index');
+
+Route::post('registerKaryawan', 'UserController@registerKaryawan');
+Route::post('edit/{id}', 'UserController@updateKaryawan');
+
+
 
 Route::resource('bunga', 'BungaController', [
         'names' => [
