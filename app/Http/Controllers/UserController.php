@@ -146,8 +146,8 @@ class UserController extends Controller
 
     public function updateKaryawan(Request $request, $id)
     {
-
-        $user = User::find($id);
+        $id = $request->input('id');
+        $user = User::all();
         $password = $request->input('password');
         if (!Hash::check($password, $user->password)) {
             return response()->json(['success'=>false, 'message' => 'Password salah, coba cek lagi']);
@@ -157,7 +157,7 @@ class UserController extends Controller
             $user->save();
             return response()->json(['success'=>true,'message'=>'success', 'data' => $user]);
         }
-        
+
        // User::where('id',$id)->update($request->except('_token','_method')); 
        // return response()->json(['error'=> FALSE], $this->successStatus);
     }
