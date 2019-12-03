@@ -23,7 +23,7 @@ Route::post('edit/{id}', 'UserController@userEdit');
 // Route::get('bunga', 'BungaController@index');
 
 Route::post('registerKaryawan', 'UserController@registerKaryawan');
-Route::post('edit/{id}', 'UserController@updateKaryawan');
+Route::post('editKaryawan/{id}', 'UserController@updateKaryawan');
 
 
 
