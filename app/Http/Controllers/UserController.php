@@ -146,7 +146,9 @@ class UserController extends Controller
 
     public function updateKaryawan(Request $request, $id)
     {
-        $user = User::where('email', $request->email)->find($id);
+
+        $user = User::all();
+        $id = $user->where('email', $request->email)->find('id');
         $password = $request->input('password');
         if (!Hash::check($password, $user->password)) {
             return response()->json(['success'=>false, 'message' => 'Password salah, coba cek lagi']);
