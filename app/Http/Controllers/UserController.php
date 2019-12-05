@@ -43,7 +43,7 @@ class UserController extends Controller
         $user = User::create($input);
         $success['token'] =  $user->createToken('token')->accessToken;
         $success['name'] =  $user->name;
-        return response()->json(['error'=> FALSE], $this->successStatus);
+        return response()->json(['sukses'=> true, 'data' => $user], $this->successStatus);
         //simpan data dari input
 
     }
