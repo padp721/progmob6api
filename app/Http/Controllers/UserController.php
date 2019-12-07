@@ -18,32 +18,24 @@ class UserController extends Controller
     //=================REGISTER
     public function registerUser(Request $request) {
         //validasi input
-    	$validator = Validator::make($request->all(), [  
+    	$validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email',
             'password' => 'required',
-            'confirm_password' => 'required|same:password',
+            'c_password' => 'required|same:password',
         ]);
+
         if ($validator->fails()) {
-            return response()->json(['error'=>$validator->errors()], 401);           
+            return response()->json(['error_msg'=>$validator->errors()], 401);            
         }
-        //validasi input
 
-        //cek email
-        $user = User::where('email', $request->email)->first();
-        if(!is_null($user)) {
-            $data['message'] = "Sorry! this email is already registered";
-            return response()->json(['success' => false, 'status' => 'failed', 'data' => $data]);
-        }
-        //cek email
-
-        //simpan data dari input
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
-        $success['token'] =  $user->createToken('token')->accessToken;
+        $success['token'] =  $user->createToken('nApp')->accessToken;
         $success['name'] =  $user->name;
-        return response()->json(['sukses'=> true, 'data' => $user], $this->successStatus);
+
+        return response()->json(['error'=> FALSE, 'success'=>$success], $this->successStatus);
         //simpan data dari input
 
     }
@@ -54,34 +46,21 @@ class UserController extends Controller
     //=================LOGIN
     public function userLogin(Request $request) {
         //cek input
-        if(Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
-             
-            //mendapatkan data auth user
+        if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){
             $user = Auth::user();
- 
-            $token                  =       $user->createToken('nApp')->accessToken;
-            // $success['success']     =       true;
-            // $success['message']     =       "Success! you are logged in successfully";
-            $user['token']       =       $token;
- 			return response()->json(['error' => FALSE, 'user' => $user], $this->successStatus);
+            $user['token'] =  $user->createToken('nApp')->accessToken;
+            return response()->json(['error' => FALSE, 'user' => $user], $this->successStatus);
         }
- 
-        else {
-            return response()->json(['error'=>'Unauthorised'], 401);
+        else{
+            return response()->json(['error_msg'=>'Unauthorised'], 401);
         }
     }
     //LOGIN=================
 
-    public function userDetails() {
-        //cek input
-             
-            //mendapatkan data auth user
-            $user = Auth::user();
-            // $token                  =       $user->createToken('token')->accessToken;
-            // $success['success']     =       true;
-            // $success['message']     =       "Success! you are logged in successfully";
-            // $success['token']       =       $token;
-            return response()->json(['success' => true, 'user' => $user], $this->successStatus);
+    public function details()
+    {
+        $user = Auth::user();
+        return response()->json($user, $this->successStatus);
     }
     //LOGIN=================
 
