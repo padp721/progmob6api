@@ -72,6 +72,19 @@ class UserController extends Controller
     }
     //LOGIN=================
 
+    public function userDetails() {
+        //cek input
+             
+            //mendapatkan data auth user
+            $user = Auth::user();
+            $token                  =       $user->createToken('token')->accessToken;
+            $success['success']     =       true;
+            $success['message']     =       "Success! you are logged in successfully";
+            $success['token']       =       $token;
+            return response()->json(['success' => true, 'user' => $user], $this->successStatus);
+    }
+    //LOGIN=================
+
 
 
     public function userEdit(Request $request, $id){
