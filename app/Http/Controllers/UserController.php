@@ -59,10 +59,10 @@ class UserController extends Controller
             //mendapatkan data auth user
             $user = Auth::user();
  
-            $token                  =       $user->createToken('token')->accessToken;
-            $success['success']     =       true;
-            $success['message']     =       "Success! you are logged in successfully";
-            $success['token']       =       $token;
+            $token                  =       $user->createToken('nApp')->accessToken;
+            // $success['success']     =       true;
+            // $success['message']     =       "Success! you are logged in successfully";
+            $user['token']       =       $token;
  			return response()->json(['error' => FALSE, 'user' => $user], $this->successStatus);
         }
  
@@ -77,10 +77,10 @@ class UserController extends Controller
              
             //mendapatkan data auth user
             $user = Auth::user();
-            $token                  =       $user->createToken('token')->accessToken;
-            $success['success']     =       true;
-            $success['message']     =       "Success! you are logged in successfully";
-            $success['token']       =       $token;
+            // $token                  =       $user->createToken('token')->accessToken;
+            // $success['success']     =       true;
+            // $success['message']     =       "Success! you are logged in successfully";
+            // $success['token']       =       $token;
             return response()->json(['success' => true, 'user' => $user], $this->successStatus);
     }
     //LOGIN=================
