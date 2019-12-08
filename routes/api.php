@@ -13,14 +13,22 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+// 	Route::post('edit/{id}', 'UserController@userEdit');
+// 	Route::post('detail', 'UserController@details');
+//     return $request->user();
+// });
 Route::post('register', 'UserController@registerUser');
 Route::post('login', 'UserController@userLogin');
-Route::post('edit/{id}', 'UserController@userEdit');
-// Route::get('bunga', 'BungaController@index');
+Route::group(['middleware' => 'auth:api'], function(){
+	Route::post('detail', 'UserController@details');
+});
+
+// Route::post('register', 'UserController@registerUser');
+// Route::post('login', 'UserController@userLogin');
+// Route::post('edit/{id}', 'UserController@userEdit');
+// Route::post('detail', 'UserController@details');
+// // Route::get('bunga', 'BungaController@index');
 
 Route::post('registerKaryawan', 'UserController@registerKaryawan');
 Route::post('editKaryawan/{id}', 'UserController@updateKaryawan');
