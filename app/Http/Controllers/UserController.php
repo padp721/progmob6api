@@ -57,10 +57,10 @@ class UserController extends Controller
     }
     //LOGIN=================
 
-    public function details()
+    public function detailKaryawan()
     {
         $userDetail = Auth::user();
-        return response()->json($user, $this->successStatus);
+        return response()->json($userDetail, $this->successStatus);
     }
     //LOGIN=================
 
