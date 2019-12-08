@@ -32,3 +32,13 @@ Route::resource('bunga', 'BungaController', [
             'index' => 'indexbunga',
         ]
     ]);
+
+// Route::resource('simpanan', 'SimpananController', [
+//         'names' => [
+//             'index' => 'indexsimpanan',
+//         ]
+//     ]);
+
+Route::post('simpanan', 'SimpananController@store');
+Route::post('verify/{pegawai}/{id}', 'SimpananController@update');
+Route::post('hitung_bunga/{pegawai}', 'PerhitunganBungaController@create');
