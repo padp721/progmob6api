@@ -30,6 +30,7 @@ class UserController extends Controller
         }
 
         $input = $request->all();
+        $input['user_role'] = "Nasabah";
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
         $success['token'] =  $user->createToken('nApp')->accessToken;
