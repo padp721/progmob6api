@@ -14,12 +14,12 @@ use Illuminate\Http\Request;
 */
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
-	Route::post('register', 'UserController@registerUser');
-	Route::post('login', 'UserController@userLogin');
 	Route::post('edit/{id}', 'UserController@userEdit');
 	Route::post('detail', 'UserController@details');
     return $request->user();
 });
+	Route::post('register', 'UserController@registerUser');
+	Route::post('login', 'UserController@userLogin');
 
 // Route::post('register', 'UserController@registerUser');
 // Route::post('login', 'UserController@userLogin');
