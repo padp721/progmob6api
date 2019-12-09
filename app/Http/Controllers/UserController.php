@@ -22,6 +22,7 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email',
             'password' => 'required',
+            'no_telp' => 'required|numeric|min:12'
             'c_password' => 'required|same:password',
         ]);
 
