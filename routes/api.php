@@ -51,3 +51,22 @@ Route::resource('bunga', 'BungaController', [
 Route::post('simpanan', 'SimpananController@store');
 Route::post('verify/{pegawai}/{id}', 'SimpananController@update');
 Route::post('hitung_bunga/{pegawai}', 'PerhitunganBungaController@create');
+Route::get('not_verify','SimpananController@show');
+
+Route::group(['prefix'=>'report'],function(){
+
+    Route::get('nasabah','ReportController@nasabah')->name('reportnasabah');
+    Route::get('nasabah/{id}','ReportController@detailnasabah')->name('detailnasabah');
+
+    Route::get('harian','ReportController@harian')->name('reportharian');
+    Route::post('harian','ReportController@harians')->name('reportharian');
+
+    Route::post('mingguan','ReportController@mingguan')->name('reportmingguan');
+    Route::get('mingguan','ReportController@mingguanNow')->name('reportmingguan');
+
+    Route::post('bulanan','ReportController@bulanan')->name('reportbulanan');
+    Route::get('bulanan','ReportController@bulananNow')->name('reportbulanan');
+
+    Route::post('tahunan','ReportController@tahunan')->name('reporttahunan');
+    Route::get('tahunan','ReportController@tahunanNow')->name('reporttahunan');
+});

@@ -77,8 +77,8 @@ class SimpananController extends Controller
      */
     public function show(Simpanan $simpanan)
     {
-        // return $simpanan;
-        // return view('',['data'=>$simpanan]);
+        $not_verified = Simpanan::where('status','Not Verified')->get();
+        return response()->json(['data' => $not_verified]);
     }
 
     /**
