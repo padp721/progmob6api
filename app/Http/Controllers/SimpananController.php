@@ -67,7 +67,8 @@ class SimpananController extends Controller
         if($uang->saldo < $request['nominal_transaksi'] && $request->jenis_transaksi == 2){
             return response()->json(['error' => TRUE, 'msg' => 'Saldo tidak cukup!']);
         }
-        Simpanan::create($request->all());        
+        Simpanan::create($request->all());
+            
         return response()->json(['error' => FALSE, 'msg' => 'Berhasil Transaksi!']);
     }
 
@@ -79,7 +80,9 @@ class SimpananController extends Controller
      */
     public function show(Simpanan $simpanan)
     {
-        $not_verified = Simpanan::where('status','Not Verified')->get();
+        $not_verified = Simpanan::where('status','Not Verified')
+            ->whereNotNull('bukti_pembayaran')
+            ->get();
         return response()->json(['data' => $not_verified]);
     }
 
