@@ -48,6 +48,7 @@ Route::resource('bunga', 'BungaController', [
 //         ]
 //     ]);
 
+// Route::post('upload_bukti/{id}','SimpananController@uploadBukti');
 Route::post('simpanan', 'SimpananController@store');
 Route::post('verify/{pegawai}/{id}', 'SimpananController@update');
 Route::post('hitung_bunga/{pegawai}', 'PerhitunganBungaController@create');
@@ -70,5 +71,3 @@ Route::group(['prefix'=>'report'],function(){
     Route::post('tahunan','ReportController@tahunan')->name('reporttahunan');
     Route::get('tahunan','ReportController@tahunanNow')->name('reporttahunan');
 });
-
-Route::post('upload_bukti/{id}','SimpananController@uploadBukti');
