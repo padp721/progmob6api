@@ -113,7 +113,8 @@ class SimpananController extends Controller
         $bukti->bukti_pembayaran = $link;
         $bukti->save();
             
-        return response()->json(['error' => FALSE, 'msg' => 'Berhasil Melakukan Transaksi!']);
+        // return response()->json(['error' => FALSE, 'msg' => 'Berhasil Melakukan Transaksi!']);
+        return response()->json(['success'=>true,'message'=>'success', 'data' => $bukti]);
     }
 
     /**
