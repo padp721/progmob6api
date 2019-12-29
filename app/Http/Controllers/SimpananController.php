@@ -56,27 +56,29 @@ class SimpananController extends Controller
     {
         //BUKTI UPLOAD PROCESS
         //check if directories in gd exists
-        $dir = '/';
-        $recursive = false;
-        $contents = collect(Storage::cloud()->listContents($dir, $recursive));
-        $dir = $contents->where('type', '=', 'dir')
-            ->where('filename', '=', 'bukti_pembayaran')
-            ->first(); // There could be duplicate directory names!
-        if (!$dir) {
-            return 'Directory does not exist!';
+        if($request['jenis_transaksi'] == '1'){
+            $dir = '/';
+            $recursive = false;
+            $contents = collect(Storage::cloud()->listContents($dir, $recursive));
+            $dir = $contents->where('type', '=', 'dir')
+                ->where('filename', '=', 'bukti_pembayaran')
+                ->first(); // There could be duplicate directory names!
+            if (!$dir) {
+                return 'Directory does not exist!';
+            }
+
+            //SAVING FILE
+            //get file from request
+            $file = $request->file('buktiUpload');
+
+            //make it readable by Storage::cloud()
+            $fileData = File::get($file);
+
+            //make custom file name
+            $fileName = 'buktiPembayaran';
+            $fileExtension = $file->getClientOriginalExtension();
+            $fileNameToStorage = $fileName.'_'.time().'.'.$fileExtension;
         }
-
-        //SAVING FILE
-        //get file from request
-        $file = $request->file('buktiUpload');
-
-        //make it readable by Storage::cloud()
-        $fileData = File::get($file);
-
-        //make custom file name
-        $fileName = 'buktiPembayaran';
-        $fileExtension = $file->getClientOriginalExtension();
-        $fileNameToStorage = $fileName.'_'.time().'.'.$fileExtension;
 
         //NEW TRANSACTION PROCESS
         // return $request->file('buktiUpload')->getClientOriginalExtension();
@@ -94,25 +96,27 @@ class SimpananController extends Controller
         }
         Simpanan::create($request->all());
 
-        //upload to cloud
-        Storage::cloud()->put($dir['path'].'/'.$fileNameToStorage,$fileData);
+        if($request['jenis_transaksi'] == '1'){
+            //upload to cloud
+            Storage::cloud()->put($dir['path'].'/'.$fileNameToStorage,$fileData);
 
-        //GET FILE ID
-        $new_file = collect(Storage::cloud()->listContents($dir['path'], false))
-            ->where('type', '=', 'file')
-            ->where('filename', '=', pathinfo($fileNameToStorage, PATHINFO_FILENAME))
-            ->first()
-            ;
-        $link = 'https://docs.google.com/uc?id='.$new_file['basename'];
+            //GET FILE ID
+            $new_file = collect(Storage::cloud()->listContents($dir['path'], false))
+                ->where('type', '=', 'file')
+                ->where('filename', '=', pathinfo($fileNameToStorage, PATHINFO_FILENAME))
+                ->first()
+                ;
+            $link = 'https://docs.google.com/uc?id='.$new_file['basename'];
 
-        //Saving bukti link to DB
-        $bukti = Simpanan::where('id_user_nasabah',$request['id_user_nasabah'])
-            ->whereNull('bukti_pembayaran')
-            ->orderBy('tanggal','DESC')
-            ->first();
-        $bukti->bukti_pembayaran = $link;
-        $bukti->tanggal = NOW();
-        $bukti->save();
+            //Saving bukti link to DB
+            $bukti = Simpanan::where('id_user_nasabah',$request['id_user_nasabah'])
+                ->whereNull('bukti_pembayaran')
+                ->orderBy('tanggal','DESC')
+                ->first();
+            $bukti->bukti_pembayaran = $link;
+            $bukti->tanggal = NOW();
+            $bukti->save();
+        }
             
         // return response()->json(['error' => FALSE, 'msg' => 'Berhasil Melakukan Transaksi!']);
         return response()->json(['success'=>true,'message'=>'success', 'data' => $bukti]);
