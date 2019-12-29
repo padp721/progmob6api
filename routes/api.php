@@ -74,3 +74,7 @@ Route::group(['prefix'=>'report'],function(){
     Route::post('tahunan','ReportController@tahunan')->name('reporttahunan');
     Route::get('tahunan','ReportController@tahunanNow')->name('reporttahunan');
 });
+
+Route::get('notif/setoran','FirebaseNotificationController@setoran');
+Route::get('notif/approval','FirebaseNotificationController@approval');
+Route::get('notif','FirebaseNotificationController@allNotif');

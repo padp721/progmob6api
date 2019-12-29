@@ -98,6 +98,7 @@ class SimpananController extends Controller
 
         $bukti = Simpanan::where('id_user_nasabah',$request['id_user_nasabah'])
                 ->whereNull('bukti_pembayaran')
+                ->where('jenis_transaksi', 1)
                 ->orderBy('tanggal','DESC')
                 ->first();
 
@@ -141,6 +142,7 @@ class SimpananController extends Controller
     {
         $not_verified = Simpanan::where('status','Not Verified')
             ->where('jenis_transaksi','2')
+            ->whereNotNull('bukti_pembayaran')
             ->get();
         return response()->json(['tarik' => $not_verified]);
     }

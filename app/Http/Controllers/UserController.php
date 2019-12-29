@@ -50,6 +50,7 @@ class UserController extends Controller
         //cek input
         if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){
             $user = Auth::user();
+            $user->fcm_token = request('fcm_token');
             $user['token'] =  $user->createToken('nApp')->accessToken;
             return response()->json(['error' => FALSE, 'user' => $user], $this->successStatus);
         }
