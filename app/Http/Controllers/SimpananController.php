@@ -114,9 +114,14 @@ class SimpananController extends Controller
                 ->orderBy('tanggal','DESC')
                 ->first();
             $bukti->bukti_pembayaran = $link;
-            $bukti->tanggal = NOW();
             $bukti->save();
         }
+        $bukti = Simpanan::where('id_user_nasabah',$request['id_user_nasabah'])
+                ->whereNull('bukti_pembayaran')
+                ->orderBy('tanggal','DESC')
+                ->first();
+        $bukti->tanggal = NOW();
+        $bukti->save();
             
         // return response()->json(['error' => FALSE, 'msg' => 'Berhasil Melakukan Transaksi!']);
         return response()->json(['success'=>true,'message'=>'success', 'data' => $bukti]);
