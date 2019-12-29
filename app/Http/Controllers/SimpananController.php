@@ -94,7 +94,7 @@ class SimpananController extends Controller
         if($uang->saldo < $request['nominal_transaksi'] && $request->jenis_transaksi == 2){
             return response()->json(['error' => TRUE, 'msg' => 'Saldo tidak cukup!']);
         }
-        Simpanan::create($request->all());
+        Simpanan::create(array_merge($request->all(), ['tanggal' => NOW()]));
 
         if($request['jenis_transaksi'] == '1'){
             //upload to cloud
@@ -116,12 +116,6 @@ class SimpananController extends Controller
             $bukti->bukti_pembayaran = $link;
             $bukti->save();
         }
-        $bukti = Simpanan::where('id_user_nasabah',$request['id_user_nasabah'])
-                ->whereNull('bukti_pembayaran')
-                ->orderBy('tanggal','DESC')
-                ->first();
-        $bukti->tanggal = NOW();
-        $bukti->save();
             
         // return response()->json(['error' => FALSE, 'msg' => 'Berhasil Melakukan Transaksi!']);
         return response()->json(['success'=>true,'message'=>'success', 'data' => $bukti]);
