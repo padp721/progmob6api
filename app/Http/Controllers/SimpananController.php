@@ -111,6 +111,7 @@ class SimpananController extends Controller
             ->orderBy('tanggal','DESC')
             ->first();
         $bukti->bukti_pembayaran = $link;
+        $bukti->tanggal = NOW();
         $bukti->save();
             
         // return response()->json(['error' => FALSE, 'msg' => 'Berhasil Melakukan Transaksi!']);
@@ -217,7 +218,6 @@ class SimpananController extends Controller
 
         //Saving bukti link to DB
         $bukti = Simpanan::find($id);
-        $bukti->tanggal = NOW();
         $bukti->bukti_pembayaran = $link;
         $bukti->save();
 
