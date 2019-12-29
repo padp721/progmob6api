@@ -56,7 +56,7 @@ class SimpananController extends Controller
     {
         //BUKTI UPLOAD PROCESS
         //check if directories in gd exists
-        if($request['jenis_transaksi'] == '1'){
+        if($request['jenis_transaksi'] == 1){
             $dir = '/';
             $recursive = false;
             $contents = collect(Storage::cloud()->listContents($dir, $recursive));
@@ -101,7 +101,7 @@ class SimpananController extends Controller
                 ->orderBy('tanggal','DESC')
                 ->first();
 
-        if($request['jenis_transaksi'] == '1'){
+        if($request['jenis_transaksi'] == 1){
             //upload to cloud
             Storage::cloud()->put($dir['path'].'/'.$fileNameToStorage,$fileData);
 
