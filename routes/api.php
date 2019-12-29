@@ -59,6 +59,8 @@ Route::group(['prefix'=>'report'],function(){
 
     Route::get('nasabah','ReportController@nasabah')->name('reportnasabah');
     Route::get('nasabah/{id}','ReportController@detailnasabah')->name('detailnasabah');
+    Route::get('nasabah/setor/{id}','ReportController@detailnasabahsetor')->name('detailnasabahsetor');
+    Route::get('nasabah/tarik/{id}','ReportController@detailnasabahtarik')->name('detailnasabahtarik');
 
     Route::get('harian','ReportController@harian')->name('reportharian');
     Route::post('harian','ReportController@harians')->name('reportharian');

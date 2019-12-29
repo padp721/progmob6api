@@ -28,6 +28,28 @@ class ReportController extends Controller
         return response()->json(['error' => FALSE,'user'=>$user,'histori'=>$histori,'uang'=>$uang]);
     }
 
+    public function detailnasabahtarik($id)
+    {
+        $user = User::where('id',$id)->first();
+        $histori = Simpanan::where('id_user_nasabah',$id)->where('jenis_transaksi', 2)->orderBy('tanggal','asc')->get();
+        $uang = Simpanan::select(DB::raw('SUM(nominal_transaksi) as saldo'))
+        ->where('id_user_nasabah',$id)
+        ->first();
+        // return $histori->jenis->transaksi;
+        return response()->json(['error' => FALSE,'user'=>$user,'histori'=>$histori,'uang'=>$uang]);
+    }
+
+    public function detailnasabahsetor($id)
+    {
+        $user = User::where('id',$id)->first();
+        $histori = Simpanan::where('id_user_nasabah',$id)->where('jenis_transaksi', 1)->orderBy('tanggal','asc')->get();
+        $uang = Simpanan::select(DB::raw('SUM(nominal_transaksi) as saldo'))
+        ->where('id_user_nasabah',$id)
+        ->first();
+        // return $histori->jenis->transaksi;
+        return response()->json(['error' => FALSE,'user'=>$user,'histori'=>$histori,'uang'=>$uang]);
+    }
+
     public function harian()
     {
         date_default_timezone_set("Asia/Singapore");
