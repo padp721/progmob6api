@@ -56,7 +56,7 @@ class SimpananController extends Controller
     {
         //BUKTI UPLOAD PROCESS
         //check if directories in gd exists
-        if($request['jenis_transaksi'] == 1){
+        if($request['jenis_transaksi'] == '1'){
             $dir = '/';
             $recursive = false;
             $contents = collect(Storage::cloud()->listContents($dir, $recursive));
@@ -98,10 +98,11 @@ class SimpananController extends Controller
 
         $bukti = Simpanan::where('id_user_nasabah',$request['id_user_nasabah'])
                 ->whereNull('bukti_pembayaran')
+                ->where('jenis_transaksi', 1)
                 ->orderBy('tanggal','DESC')
                 ->first();
 
-        if($request['jenis_transaksi'] == 1){
+        if($request['jenis_transaksi'] == '1'){
             //upload to cloud
             Storage::cloud()->put($dir['path'].'/'.$fileNameToStorage,$fileData);
 
@@ -141,6 +142,7 @@ class SimpananController extends Controller
     {
         $not_verified = Simpanan::where('status','Not Verified')
             ->where('jenis_transaksi','2')
+            ->whereNotNull('bukti_pembayaran')
             ->get();
         return response()->json(['tarik' => $not_verified]);
     }
