@@ -130,7 +130,7 @@ class SimpananController extends Controller
             ->where('jenis_transaksi','1')
             ->whereNotNull('bukti_pembayaran')
             ->get();
-        return response()->json(['data' => $not_verified]);
+        return response()->json(['simpan' => $not_verified]);
     }
 
     public function notVerifyTarik(Simpanan $simpanan)
@@ -139,7 +139,7 @@ class SimpananController extends Controller
             ->where('jenis_transaksi','2')
             ->whereNotNull('bukti_pembayaran')
             ->get();
-        return response()->json(['data' => $not_verified]);
+        return response()->json(['tarik' => $not_verified]);
     }
 
     /**
