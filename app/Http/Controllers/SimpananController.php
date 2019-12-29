@@ -124,9 +124,19 @@ class SimpananController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Simpanan $simpanan)
+    public function notVerifySimpan(Simpanan $simpanan)
     {
         $not_verified = Simpanan::where('status','Not Verified')
+            ->where('jenis_transaksi','1')
+            ->whereNotNull('bukti_pembayaran')
+            ->get();
+        return response()->json(['data' => $not_verified]);
+    }
+
+    public function notVerifyTarik(Simpanan $simpanan)
+    {
+        $not_verified = Simpanan::where('status','Not Verified')
+            ->where('jenis_transaksi','2')
             ->whereNotNull('bukti_pembayaran')
             ->get();
         return response()->json(['data' => $not_verified]);
