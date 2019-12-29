@@ -217,6 +217,7 @@ class SimpananController extends Controller
 
         //Saving bukti link to DB
         $bukti = Simpanan::find($id);
+        $bukti->tanggal = NOW();
         $bukti->bukti_pembayaran = $link;
         $bukti->save();
 
