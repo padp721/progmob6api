@@ -71,7 +71,7 @@ class PerhitunganBungaController extends Controller
                 $insert_orang->status = 'Verified';
                 $insert_orang->save();
             }
-            return response()->json(['error' => FALSE, 'msg' => 'Berhasil hitung bunga!']);
+            return response()->json(['error' => FALSE, 'msg' => 'Berhasil hitung bunga!', 'data' => $insert_orang]);
         }
     }
 
