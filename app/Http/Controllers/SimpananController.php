@@ -141,7 +141,6 @@ class SimpananController extends Controller
     {
         $not_verified = Simpanan::where('status','Not Verified')
             ->where('jenis_transaksi','2')
-            ->whereNotNull('bukti_pembayaran')
             ->get();
         return response()->json(['tarik' => $not_verified]);
     }
