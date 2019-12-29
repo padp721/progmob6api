@@ -96,6 +96,11 @@ class SimpananController extends Controller
         }
         Simpanan::create(array_merge($request->all(), ['tanggal' => NOW()]));
 
+        $bukti = Simpanan::where('id_user_nasabah',$request['id_user_nasabah'])
+                ->whereNull('bukti_pembayaran')
+                ->orderBy('tanggal','DESC')
+                ->first();
+
         if($request['jenis_transaksi'] == '1'){
             //upload to cloud
             Storage::cloud()->put($dir['path'].'/'.$fileNameToStorage,$fileData);
@@ -109,10 +114,6 @@ class SimpananController extends Controller
             $link = 'https://docs.google.com/uc?id='.$new_file['basename'];
 
             //Saving bukti link to DB
-            $bukti = Simpanan::where('id_user_nasabah',$request['id_user_nasabah'])
-                ->whereNull('bukti_pembayaran')
-                ->orderBy('tanggal','DESC')
-                ->first();
             $bukti->bukti_pembayaran = $link;
             $bukti->save();
         }
