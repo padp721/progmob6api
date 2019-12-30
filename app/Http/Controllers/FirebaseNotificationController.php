@@ -7,17 +7,18 @@ use GuzzleHttp\Client;
 use App\User;
 use App\Post;
 use App\Notification;
-
+use App\Simpanan;
 class FirebaseNotificationController extends Controller
 {
     public $apiKey = "AAAAjleJQSg:APA91bEqiJD7S5HM2Gtc0zuqRWuYVo6cMwUvsfvNECcB6cREJ2xye4kbWh8iE4NO_Iud6gaZLkZj9r1wPju7ukASmfdahIEUl1SY_18CC_bXznlUUeld2tRk_GwWsoFhS388AzVF9ERG";
     //notif ada yang nemuin
 
     public function setoran(Request $request){
-        $user = User::select('fcm_token')->where('user_role', "Admin")->get();
-        $userFCMToken = $user->fcm_token; //user_id yang barangnya ditemukan
-        $transaksi = Simpanan::find($request->id); //post yang barangnya ketemu
-        $postTitle = $transaksi->id_user_nasabah;
+        $user = User::select('fcm_token')->where('user_role', "Admin")->whereNotNull('fcm_token')->get();
+        $fcm_tokens = [];
+        foreach ($user as $key => $value) {
+            array_push($fcm_tokens,$value->fcm_token);
+        }
         $body = "Transaksi Terbaru oleh segera cek";
         $title = "Transaksi terbaru!";
         $client = new Client([
@@ -38,7 +39,7 @@ class FirebaseNotificationController extends Controller
             //     "Nick"=>"Mario",
             //     "Room"=>"PortugalVSDenmark"
             // ),
-            "registration_ids"=>$user
+            "registration_ids"=>$fcm_tokens
             )
         ]);
         // $notification = New Notification();
