@@ -17,9 +17,9 @@ class FirebaseNotificationController extends Controller
         $user = User::find($request->user_id);
         $userFCMToken = $user->fcm_token; //user_id yang barangnya ditemukan
         $transaksi = Simpanan::find($request->id); //post yang barangnya ketemu
-        $transaksi = $transaksi->judul;
-        $body = "Post barang kehilanganmu dengan judul ".$postTitle." sudah ada yang menemukan";
-        $title = "Barang ditemukan!";
+        $postTitle = $transaksi->id_user_nasabah;
+        $body = "Transaksi Terbaru oleh ".$postTitle." segera cek";
+        $title = "Transaksi terbaru!";
         $client = new Client([
             // Base URI is used with relative requests
             'base_uri' => 'https://fcm.googleapis.com/fcm/send',
@@ -42,7 +42,7 @@ class FirebaseNotificationController extends Controller
             )
         ]);
         $notification = New Notification();
-        $notification->id_post = $post->id;
+        $notification->id_simpanan = $transaksi->id;
         $notification->id_user = $user->id;
         $notification->title = $title;
         $notification->body = $body;
@@ -51,13 +51,13 @@ class FirebaseNotificationController extends Controller
     }
 
     public function approval(Request $request){
-        $user = User::find($request->user_id); //user_id yang posting ketemu barang
+        $user = User::find($request->id); //user_id yang posting ketemu barang
         $userFCMToken = $user->fcm_token; 
-        $post = Post::find($request->post_id); //post yang barangnya diklaim ketemu
-        $postTitle = $post->judul;
-        $userClaim = User::find($request->user_id_claim)->name; //user_id yang claim punya barang
-        $body = "Post ketemu barang mu dengan judul ".$postTitle." telah disetujui oleh ".$userClaim;
-        $title = "Barang diclaim!";
+        $transaksi = Simpanan::find($request->id); //post yang barangnya diklaim ketemu
+        $postTitle = $transaksi->jenis_transaksi;
+        $userClaim = Simpanan::find($request->id_user_karyawan)->nama; //user_id yang claim punya barang
+        $body = "Transaksi Berhasil ".$postTitle." telah disetujui oleh ".$userClaim;
+        $title = "Transaksi Berhasil!";
         $client = new Client([
             // Base URI is used with relative requests
             'base_uri' => 'https://fcm.googleapis.com/fcm/send',
@@ -80,7 +80,7 @@ class FirebaseNotificationController extends Controller
             )
         ]);
         $notification = New Notification();
-        $notification->id_post = $post->id;
+        $notification->id_simpanan = $simpanan->id;
         $notification->id_user = $user->id;
         $notification->title = $title;
         $notification->body = $body;
