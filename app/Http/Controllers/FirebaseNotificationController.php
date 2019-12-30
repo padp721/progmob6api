@@ -14,7 +14,7 @@ class FirebaseNotificationController extends Controller
     //notif ada yang nemuin
 
     public function setoran(Request $request){
-        $user = User::where('user_role', "Admin")->select('fcm_token')->get();
+        $user = User::select('fcm_token')->where('user_role', "Admin")->get();
         $userFCMToken = $user->fcm_token; //user_id yang barangnya ditemukan
         $transaksi = Simpanan::find($request->id); //post yang barangnya ketemu
         $postTitle = $transaksi->id_user_nasabah;
