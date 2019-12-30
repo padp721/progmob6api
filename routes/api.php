@@ -52,8 +52,8 @@ Route::resource('bunga', 'BungaController', [
 Route::post('simpanan', 'SimpananController@store');
 Route::post('verify/{pegawai}/{id}', 'SimpananController@update');
 Route::post('hitung_bunga/{pegawai}', 'PerhitunganBungaController@create');
-Route::post('not_verify_simpan','SimpananController@notVerifySimpan');
-Route::get('not_verify_tarik','SimpananController@notVerifyTarik');
+Route::post('not_verify','SimpananController@notVerify');
+// Route::get('not_verify_tarik','SimpananController@notVerifyTarik');
 
 Route::group(['prefix'=>'report'],function(){
 
