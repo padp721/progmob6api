@@ -18,7 +18,7 @@ class FirebaseNotificationController extends Controller
         $userFCMToken = $user->fcm_token; //user_id yang barangnya ditemukan
         $transaksi = Simpanan::find($request->id); //post yang barangnya ketemu
         $postTitle = $transaksi->id_user_nasabah;
-        $body = "Transaksi Terbaru oleh ".$postTitle." segera cek";
+        $body = "Transaksi Terbaru oleh segera cek";
         $title = "Transaksi terbaru!";
         $client = new Client([
             // Base URI is used with relative requests
@@ -41,13 +41,13 @@ class FirebaseNotificationController extends Controller
             "registration_ids"=>$user
             )
         ]);
-        $notification = New Notification();
-        $notification->id_simpanan = $transaksi->id;
-        $notification->id_user = $user->id;
-        $notification->title = $title;
-        $notification->body = $body;
-        $notification->save();
-        return $notification;
+        // $notification = New Notification();
+        // $notification->id_simpanan = $transaksi->id;
+        // $notification->id_user = $user->id;
+        // $notification->title = $title;
+        // $notification->body = $body;
+        // $notification->save();
+        // return $notification;
     }
 
     public function approval(Request $request){
