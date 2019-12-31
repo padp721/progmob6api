@@ -177,6 +177,7 @@ class UserController extends Controller
     public function allNasabah()
     {
         $nasabah = User::where('user_role','Nasabah')->get();
-        return response()->json(['nasabah' => $nasabah]);
+        $uang = Simpanan::select(DB::raw('SUM(nominal_transaksi) as saldo'))->where('id_user_nasabah',$request['id_user_nasabah'])->first();
+        return response()->json(['nasabah' => $nasabah, 'saldo' => $uang]);
     }
 }
