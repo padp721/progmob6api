@@ -1,7 +1,6 @@
 <?php
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\User;
 use App\Simpanan;
 use Illuminate\Support\Facades\Validator;
@@ -179,7 +178,6 @@ class UserController extends Controller
     public function allNasabah()
     {
         $nasabah = User::where('user_role','Nasabah')->get();
-        $uang = Simpanan::select(DB::raw('SUM(nominal_transaksi) as saldo'))->where('id_user_nasabah',$request['id_user_nasabah'])->first();
-        return response()->json(['nasabah' => $nasabah, 'saldo' => $uang]);
+        return response()->json(['nasabah' => $nasabah]);
     }
 }
