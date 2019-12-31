@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Simpanan;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -160,10 +161,17 @@ class UserController extends Controller
        // return response()->json(['error'=> FALSE], $this->successStatus);
     }
 
-    public function hapusKaryawan($id)
+    public function hapusNasabah($id)
     {
+        $cekPunyaSimpanan = Simpanan::where('id_user_nasabah',$id)->get();
+        if($cekPunyaSimpanan){
+            foreach($cekPunyaSimpanan as $simpanan){
+                $simpanan->id_user_nasabah = null;
+                $simpanan->save();
+            }
+        }
         User::where('id',$id)->delete();
-        return response()->json(['error'=> FALSE], $this->successStatus);
+        return response()->json(['error'=> FALSE, 'msg' => 'Nasabah berhasil dihapus!'], $this->successStatus);
     }
 
     public function allNasabah()

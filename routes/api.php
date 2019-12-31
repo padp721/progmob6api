@@ -34,6 +34,7 @@ Route::group(['middleware' => 'auth:api'], function(){
 Route::post('registerKaryawan', 'UserController@registerKaryawan');
 Route::post('editKaryawan/{id}', 'UserController@updateKaryawan');
 Route::get('nasabah','UserController@allNasabah');
+Route::post('hapusnasabah/{id}','UserController@hapusNasabah');
 
 
 
