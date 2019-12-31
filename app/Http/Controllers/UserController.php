@@ -165,4 +165,10 @@ class UserController extends Controller
         User::where('id',$id)->delete();
         return response()->json(['error'=> FALSE], $this->successStatus);
     }
+
+    public function allNasabah()
+    {
+        $nasabah = User::where('user_role','Nasabah')->get();
+        return response()->json(['nasabah' => $nasabah]);
+    }
 }
