@@ -80,5 +80,5 @@ Route::group(['prefix'=>'report'],function(){
 });
 
 Route::get('notif/setoran','FirebaseNotificationController@setoran');
-Route::get('notif/approval','FirebaseNotificationController@approval');
+Route::get('notif/tarik','FirebaseNotificationController@tarik');
 Route::get('notif','FirebaseNotificationController@allNotif');
