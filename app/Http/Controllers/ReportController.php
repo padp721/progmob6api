@@ -12,7 +12,7 @@ class ReportController extends Controller
     //
     public function report()
     {
-        $data = Simpanan::where('status','Verified');
+        $data = Simpanan::where('status','Verified')->get();
         // return $data;
         return response()->json(['error' => FALSE,'data'=>$data]);
     }
