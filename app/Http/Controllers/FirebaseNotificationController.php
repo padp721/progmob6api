@@ -15,11 +15,13 @@ class FirebaseNotificationController extends Controller
 
     public function setoran(Request $request){
         $user = User::select('fcm_token')->where('user_role', "Admin")->whereNotNull('fcm_token')->get();
+        $users = User::find($request->id);
+        $usernama = $users->name;
         $fcm_tokens = [];
         foreach ($user as $key => $value) {
             array_push($fcm_tokens,$value->fcm_token);
         }
-        $body = "Transaksi Terbaru oleh segera cek";
+        $body = "Transaksi Terbaru oleh ".$usernama." segera cek";
         $title = "Transaksi terbaru!";
         $client = new Client([
             // Base URI is used with relative requests
