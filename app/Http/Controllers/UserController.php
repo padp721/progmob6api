@@ -55,6 +55,16 @@ class UserController extends Controller
             $user->fcm_token = request('fcm_token');
             $user->save();
             $user['token'] =  $user->createToken('nApp')->accessToken;
+            $uang = Simpanan::select(DB::raw('SUM(nominal_transaksi) as saldo'))
+            ->where('id_user_nasabah',$user->id)
+            ->where('status','Verified')
+            ->first();
+            if($uang->saldo){
+                $user['saldo'] = $uang->saldo;
+            }
+            else{
+                $user['saldo'] = 0;
+            }
             return response()->json(['error' => FALSE, 'user' => $user], $this->successStatus);
         }
         else{
@@ -67,10 +77,15 @@ class UserController extends Controller
     {
         $userDetail = Auth::user();
         $uang = Simpanan::select(DB::raw('SUM(nominal_transaksi) as saldo'))
-            ->where('id_user_nasabah',$userDetail->id)
-            ->where('status','Not Verified')
+            ->where('id_user_nasabah',$user->id)
+            ->where('status','Verified')
             ->first();
-        $userDetail['saldo'] = $uang->saldo;
+            if($uang->saldo){
+                $userDetail['saldo'] = $uang->saldo;
+            }
+            else{
+                $userDetail['saldo'] = 0;
+            }
         return response()->json($userDetail, $this->successStatus);
     }
     //LOGIN=================
