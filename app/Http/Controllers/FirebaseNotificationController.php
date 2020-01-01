@@ -49,6 +49,7 @@ class FirebaseNotificationController extends Controller
         // $notification->body = $body;
         // $notification->save();
         // return $notification;
+        return response()->json(['error' => FALSE, 'msg' => 'Notif Dikirim!']);
     }
 
     public function approval(Request $request){
