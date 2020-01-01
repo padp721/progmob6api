@@ -66,7 +66,10 @@ class UserController extends Controller
     public function detailKaryawan()
     {
         $userDetail = Auth::user();
-        return response()->json($userDetail, $this->successStatus);
+        $uang = Simpanan::select(DB::raw('SUM(nominal_transaksi) as saldo'))
+            ->where('id_user_nasabah',$userDetail->id)
+            ->first();
+        return response()->json($userDetail, $uang, $this->successStatus);
     }
     //LOGIN=================
 
