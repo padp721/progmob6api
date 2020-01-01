@@ -68,6 +68,7 @@ class UserController extends Controller
         $userDetail = Auth::user();
         $uang = Simpanan::select(DB::raw('SUM(nominal_transaksi) as saldo'))
             ->where('id_user_nasabah',$userDetail->id)
+            ->where('status','Not Verified')
             ->first();
         $userDetail['saldo'] = $uang->saldo;
         return response()->json($userDetail, $this->successStatus);
