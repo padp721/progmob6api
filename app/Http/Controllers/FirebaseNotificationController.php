@@ -51,7 +51,7 @@ class FirebaseNotificationController extends Controller
         // $notification->body = $body;
         // $notification->save();
         // return $notification;
-        return response()->json(['error' => FALSE, 'msg' => 'Notif Dikirim!']);
+        return response()->json(['error' => FALSE, 'msg' => 'Notif Simpanan Dikirim!']);
     }
     public function tarik(Request $request){
         $user = User::select('fcm_token')->where('user_role', "Admin")->whereNotNull('fcm_token')->get();
@@ -91,7 +91,7 @@ class FirebaseNotificationController extends Controller
         // $notification->body = $body;
         // $notification->save();
         // return $notification;
-        return response()->json(['error' => FALSE, 'msg' => 'Notif Dikirim!']);
+        return response()->json(['error' => FALSE, 'msg' => 'Notif Penarikan Dikirim!']);
     }
 
 
