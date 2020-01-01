@@ -10,6 +10,13 @@ use DB;
 class ReportController extends Controller
 {
     //
+    public function report()
+    {
+        $data = Simpanan::all();
+        // return $data;
+        return response()->json(['error' => FALSE,'data'=>$data]);
+    }
+
     public function nasabah()
     {
         $data = Simpanan::select(DB::raw('id_user_nasabah, SUM(nominal_transaksi) as saldo'))->where('status','Verified')->groupBy('id_user_nasabah')->get();

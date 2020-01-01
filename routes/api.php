@@ -59,6 +59,8 @@ Route::post('not_verify','SimpananController@notVerify');
 
 Route::group(['prefix'=>'report'],function(){
 
+    Route::get('/','ReportController@report');
+
     Route::get('nasabah','ReportController@nasabah')->name('reportnasabah');
     Route::get('nasabah/{id}','ReportController@detailnasabah')->name('detailnasabah');
     Route::get('nasabah/setor/{id}','ReportController@detailnasabahsetor')->name('detailnasabahsetor');
