@@ -69,8 +69,7 @@ class UserController extends Controller
         $uang = Simpanan::select(DB::raw('SUM(nominal_transaksi) as saldo'))
             ->where('id_user_nasabah',$userDetail->id)
             ->first();
-        array_merge((array)$userDetail, $uang);
-        $userDetail = (object)$userDetail;
+        $userDetail = (object) array_merge((array) $userDetail, (array) $uang); 
         return response()->json($userDetail, $this->successStatus);
     }
     //LOGIN=================
